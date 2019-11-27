@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { PlaceholderDirective } from '../shared/placeholder/placeholder.directiv
     selector: 'app-auth',
     templateUrl: './auth.component.html'
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
     isLoginMode = true;
     isLoading = false;
     error: string = null;
@@ -64,6 +64,11 @@ export class AuthComponent {
         this.error = null;
     }
 
+    ngOnDestroy() {
+        if (this.closeSub) {
+            this.closeSub.unsubscribe();
+        }
+    }
 
     private showErrorAlert(message: string) {
         // const alertCmp = new AlertComponents();
