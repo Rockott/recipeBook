@@ -23,13 +23,13 @@ export function authReducer(
             );
             return {
                 ...state,
-                user: user
+                user
             };
         case AuthActions.LOGOUT:
             return {
                 ...state,
                 user: null
-            }
+            };
         default:
             return state;
     }
