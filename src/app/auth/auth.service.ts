@@ -31,8 +31,8 @@ export class AuthService {
         return this.http.post<AuthResponseData>(
             'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
             {
-                email: email,
-                password: password,
+                email,
+                password,
                 returnSecureToken: true
             }
         )
@@ -65,7 +65,7 @@ export class AuthService {
 
         if (loadedUser.token) {
             // this.user.next(loadedUser);
-            this.store.dispatch(new AuthActions.Login({
+            this.store.dispatch(new AuthActions.AuthenticateSuccess({
                 email: loadedUser.email,
                 userId: loadedUser.id,
                 token: loadedUser.token,
@@ -80,8 +80,8 @@ export class AuthService {
         return this.http.post<AuthResponseData>(
             'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
             {
-                email: email,
-                password: password,
+                email,
+                password,
                 returnSecureToken: true
             }
         )
@@ -120,11 +120,11 @@ export class AuthService {
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
         const user = new User(email, userId, token, expirationDate);
         // this.user.next(user);
-        this.store.dispatch(new AuthActions.Login({
-            email: email,
-            userId: userId,
-            token: token,
-            expirationDate: expirationDate
+        this.store.dispatch(new AuthActions.AuthenticateSuccess({
+            email,
+            userId,
+            token,
+            expirationDate
         }));
         this.autoLogout(expiresIn * 1000);
         localStorage.setItem('userData', JSON.stringify(user));
