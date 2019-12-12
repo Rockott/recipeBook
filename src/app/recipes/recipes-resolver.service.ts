@@ -6,13 +6,13 @@ import { take, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { Recipe } from './recipe.model';
-import { RecipeService } from './recipe.service';
+// import { RecipeService } from './recipe.service';
 import * as fromApp from '../store/app.reducer';
 import * as RecipesActions from '../recipes/store/recipe.actions';
 
 @Injectable({ providedIn: "root" })
 export class RecipesResolverService implements Resolve<Recipe[]> {
-    constructor(private store: Store<fromApp.AppState>, private actions$: Actions, private recipeService: RecipeService) { }
+    constructor(private store: Store<fromApp.AppState>, private actions$: Actions) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         // return this.dataStorageService.fetchRecipes();
